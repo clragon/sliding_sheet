@@ -1,0 +1,13 @@
+##
+# Lint rules to be used for apps without developer facing API. i.e. command line tools and Flutter applications
+##
+analyzer:
+  errors:
+    # treat missing required parameters as a warning (not a hint)
+    missing_required_param: warning
+    # treat missing returns as a warning (not a hint)
+    missing_return: warning
+    # allow having TODOs in the code
+    todo: ignore
+    # do not override nonVirtual members
+    invalid_override_of_non_virtual_member: warning
