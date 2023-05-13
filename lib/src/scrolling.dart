@@ -1,14 +1,6 @@
 part of 'sheet.dart';
 
 class _SheetExtent {
-  final bool isDialog;
-  final _SlidingSheetScrollController? controller;
-  List<double> snappings;
-  double targetHeight = 0;
-  double childHeight = 0;
-  double headerHeight = 0;
-  double footerHeight = 0;
-  double availableHeight = 0;
   _SheetExtent(
     this.controller, {
     required this.isDialog,
@@ -22,6 +14,15 @@ class _SheetExtent {
         () => listener(currentExtent),
       );
   }
+
+  final bool isDialog;
+  final _SlidingSheetScrollController? controller;
+  List<double> snappings;
+  double targetHeight = 0;
+  double childHeight = 0;
+  double headerHeight = 0;
+  double footerHeight = 0;
+  double availableHeight = 0;
 
   late ValueNotifier<double?> _currentExtent;
   double get currentExtent => _currentExtent.value!;
@@ -67,8 +68,9 @@ class _SheetExtent {
 }
 
 class _SlidingSheetScrollController extends ScrollController {
-  final _SlidingSheetState sheet;
   _SlidingSheetScrollController(this.sheet);
+
+  final _SlidingSheetState sheet;
 
   SlidingSheet get widget => sheet.widget;
 
@@ -192,7 +194,6 @@ class _SlidingSheetScrollController extends ScrollController {
 }
 
 class _SlidingSheetScrollPosition extends ScrollPositionWithSingleContext {
-  final _SlidingSheetScrollController scrollController;
   _SlidingSheetScrollPosition(
     this.scrollController, {
     required ScrollPhysics physics,
@@ -206,6 +207,8 @@ class _SlidingSheetScrollPosition extends ScrollPositionWithSingleContext {
           debugLabel: debugLabel,
         );
 
+  final _SlidingSheetScrollController scrollController;
+
   VoidCallback? _dragCancelCallback;
   bool isMovingUp = true;
   bool isMovingDown = false;
@@ -218,6 +221,7 @@ class _SlidingSheetScrollPosition extends ScrollPositionWithSingleContext {
   void Function(double) get onPop => scrollController.onPop;
   SnapSpec get snapBehavior => sheet.snapSpec;
   ScrollSpec get scrollSpec => sheet.scrollSpec;
+  ScrollPosition get scrollPosition => scrollController.position;
   List<double> get snappings => extent.snappings;
   bool get fromBottomSheet => extent.isDialog;
   bool get snap => snapBehavior.snap;
@@ -415,7 +419,7 @@ class _SlidingSheetScrollPosition extends ScrollPositionWithSingleContext {
     final simulation = ClampingScrollSimulation(
       position: currentExtent,
       velocity: velocity,
-      tolerance: physics.tolerance,
+      tolerance: physics.toleranceFor(scrollPosition),
       friction: friction,
     );
 
@@ -425,7 +429,7 @@ class _SlidingSheetScrollPosition extends ScrollPositionWithSingleContext {
     );
 
     double lastDelta = 0;
-    void _tick() {
+    void tick() {
       final double delta = ballisticController.value - lastDelta;
       lastDelta = ballisticController.value;
       extent.addPixelDelta(delta);
@@ -441,7 +445,8 @@ class _SlidingSheetScrollPosition extends ScrollPositionWithSingleContext {
         // we just "bounce" off the top making it look like the list doesn't
         // have more to scroll.
         velocity = ballisticController.velocity +
-            (physics.tolerance.velocity * ballisticController.velocity.sign);
+            (physics.toleranceFor(scrollPosition).velocity *
+                ballisticController.velocity.sign);
         super.goBallistic(shouldMakeSheetNonDismissable ? 0.0 : velocity);
         ballisticController.stop();
 
@@ -454,7 +459,7 @@ class _SlidingSheetScrollPosition extends ScrollPositionWithSingleContext {
       }
     }
 
-    ballisticController.addListener(_tick);
+    ballisticController.addListener(tick);
     await ballisticController.animateWith(simulation);
     ballisticController.dispose();
 

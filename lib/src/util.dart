@@ -15,13 +15,14 @@ double toPrecision(double value, [int precision = 3]) {
 }
 
 class Invisible extends StatelessWidget {
-  final bool invisible;
-  final Widget? child;
   const Invisible({
     Key? key,
     this.invisible = false,
     this.child,
   }) : super(key: key);
+
+  final bool invisible;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

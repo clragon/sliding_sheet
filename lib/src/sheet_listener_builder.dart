@@ -7,13 +7,6 @@ import 'sheet.dart';
 ///
 /// This is useful to implementing custom transitions for the [SlidingSheet].
 class SheetListenerBuilder extends StatefulWidget {
-  /// A callback that gets invoked whenever the [SheetState] of the [SlidingSheet]
-  /// changes and [buildWhen] is `null` or returns `true`.
-  final Widget Function(BuildContext context, SheetState state) builder;
-
-  /// Can be used to conditionally invoke [builder] to improve performance.
-  final bool Function(SheetState oldState, SheetState newState)? buildWhen;
-
   /// Creates a widget that can be used to react to changes in the [SheetState]
   /// of a [SlidingSheet].
   const SheetListenerBuilder({
@@ -22,8 +15,15 @@ class SheetListenerBuilder extends StatefulWidget {
     this.buildWhen,
   }) : super(key: key);
 
+  /// A callback that gets invoked whenever the [SheetState] of the [SlidingSheet]
+  /// changes and [buildWhen] is `null` or returns `true`.
+  final Widget Function(BuildContext context, SheetState state) builder;
+
+  /// Can be used to conditionally invoke [builder] to improve performance.
+  final bool Function(SheetState oldState, SheetState newState)? buildWhen;
+
   @override
-  _SheetListenerBuilderState createState() => _SheetListenerBuilderState();
+  State<SheetListenerBuilder> createState() => _SheetListenerBuilderState();
 }
 
 class _SheetListenerBuilderState extends State<SheetListenerBuilder> {

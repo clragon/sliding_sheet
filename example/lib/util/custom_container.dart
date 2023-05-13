@@ -64,20 +64,20 @@ class CustomContainer extends StatelessWidget {
   final bool animate;
   final Duration duration;
 
-  static const double WRAP = -1;
-  static const double EXPAND = -2;
+  static const double wrap = -1;
+  static const double expand = -2;
 
   bool get circle => boxShape == BoxShape.circle;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final w = width == EXPAND
+    final w = width == expand
         ? double.infinity
-        : width == WRAP
+        : width == wrap
             ? null
             : width;
-    final h = height == EXPAND ? double.infinity : height;
+    final h = height == expand ? double.infinity : height;
     final br = customBorders ??
         BorderRadius.circular(
           boxShape == BoxShape.rectangle

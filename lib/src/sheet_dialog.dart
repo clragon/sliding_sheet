@@ -113,6 +113,39 @@ Future<T?> showSlidingBottomSheet<T>(
 
 /// A wrapper class to show a [SlidingSheet] as a bottom sheet dialog.
 class SlidingSheetDialog {
+  /// Creates a wrapper class to show a [SlidingSheet] as a bottom sheet dialog.
+  const SlidingSheetDialog({
+    this.builder,
+    this.customBuilder,
+    this.headerBuilder,
+    this.footerBuilder,
+    this.snapSpec = const SnapSpec(),
+    this.duration = const Duration(milliseconds: 800),
+    this.color,
+    this.backdropColor = Colors.black54,
+    this.shadowColor,
+    this.elevation = 0.0,
+    this.padding,
+    this.avoidStatusBar = false,
+    this.margin,
+    this.border,
+    this.cornerRadius = 0.0,
+    this.cornerRadiusOnFullscreen,
+    this.dismissOnBackdropTap = true,
+    this.listener,
+    this.controller,
+    this.scrollSpec = const ScrollSpec(overscroll: false),
+    this.maxWidth = double.infinity,
+    this.minHeight,
+    this.isDismissable = true,
+    this.onDismissPrevented,
+    this.isBackdropInteractable = false,
+    this.axisAlignment = 0.0,
+    this.extendBody = false,
+    this.liftOnScrollHeaderElevation = 0.0,
+    this.liftOnScrollFooterElevation = 0.0,
+  });
+
   /// {@macro sliding_sheet.builder}
   final SheetBuilder? builder;
 
@@ -200,46 +233,10 @@ class SlidingSheetDialog {
 
   /// {@macro sliding_sheet.liftOnScrollFooterElevation}
   final double liftOnScrollFooterElevation;
-
-  /// Creates a wrapper class to show a [SlidingSheet] as a bottom sheet dialog.
-  const SlidingSheetDialog({
-    this.builder,
-    this.customBuilder,
-    this.headerBuilder,
-    this.footerBuilder,
-    this.snapSpec = const SnapSpec(),
-    this.duration = const Duration(milliseconds: 800),
-    this.color,
-    this.backdropColor = Colors.black54,
-    this.shadowColor,
-    this.elevation = 0.0,
-    this.padding,
-    this.avoidStatusBar = false,
-    this.margin,
-    this.border,
-    this.cornerRadius = 0.0,
-    this.cornerRadiusOnFullscreen,
-    this.dismissOnBackdropTap = true,
-    this.listener,
-    this.controller,
-    this.scrollSpec = const ScrollSpec(overscroll: false),
-    this.maxWidth = double.infinity,
-    this.minHeight,
-    this.isDismissable = true,
-    this.onDismissPrevented,
-    this.isBackdropInteractable = false,
-    this.axisAlignment = 0.0,
-    this.extendBody = false,
-    this.liftOnScrollHeaderElevation = 0.0,
-    this.liftOnScrollFooterElevation = 0.0,
-  });
 }
 
 /// A transparent route for a bottom sheet dialog.
 class _SlidingSheetRoute<T> extends PageRoute<T> {
-  final Widget Function(BuildContext, Animation<double>, _SlidingSheetRoute<T>)
-      builder;
-  final Duration duration;
   _SlidingSheetRoute({
     required this.builder,
     required this.duration,
@@ -248,6 +245,10 @@ class _SlidingSheetRoute<T> extends PageRoute<T> {
           settings: settings,
           fullscreenDialog: false,
         );
+
+  final Widget Function(BuildContext context, Animation<double> animation,
+      _SlidingSheetRoute<T> route) builder;
+  final Duration duration;
 
   @override
   bool get opaque => false;

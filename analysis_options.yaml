@@ -1,6 +1,5 @@
-##
-# Lint rules to be used for apps without developer facing API. i.e. command line tools and Flutter applications
-##
+include: package:flutter_lints/flutter.yaml
+
 analyzer:
   errors:
     # treat missing required parameters as a warning (not a hint)

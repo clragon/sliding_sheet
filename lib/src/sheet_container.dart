@@ -7,19 +7,6 @@ import 'sheet.dart';
 // ignore_for_file: public_member_api_docs
 
 class SheetContainer extends StatelessWidget {
-  final Duration? duration;
-  final double borderRadius;
-  final double elevation;
-  final Border? border;
-  final BorderRadius? customBorders;
-  final EdgeInsets? margin;
-  final EdgeInsets padding;
-  final Widget? child;
-  final Color color;
-  final Color? shadowColor;
-  final List<BoxShadow>? boxShadows;
-  final AlignmentGeometry? alignment;
-  final BoxConstraints? constraints;
   const SheetContainer({
     Key? key,
     this.duration,
@@ -36,6 +23,20 @@ class SheetContainer extends StatelessWidget {
     this.alignment,
     this.constraints,
   }) : super(key: key);
+
+  final Duration? duration;
+  final double borderRadius;
+  final double elevation;
+  final Border? border;
+  final BorderRadius? customBorders;
+  final EdgeInsets? margin;
+  final EdgeInsets padding;
+  final Widget? child;
+  final Color color;
+  final Color? shadowColor;
+  final List<BoxShadow>? boxShadows;
+  final AlignmentGeometry? alignment;
+  final BoxConstraints? constraints;
 
   @override
   Widget build(BuildContext context) {

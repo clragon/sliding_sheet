@@ -14,7 +14,7 @@ import 'package:sliding_sheet/sliding_sheet.dart';
 const Color mapsBlue = Color(0xFF4185F3);
 
 void main() => runApp(
-      MaterialApp(
+      const MaterialApp(
         title: 'Example App',
         debugShowCheckedModeBanner: false,
         home: Example(),
@@ -22,8 +22,10 @@ void main() => runApp(
     );
 
 class Example extends StatefulWidget {
+  const Example({super.key});
+
   @override
-  _ExampleState createState() => _ExampleState();
+  State<Example> createState() => _ExampleState();
 }
 
 class _ExampleState extends State<Example> {
@@ -88,9 +90,7 @@ class _ExampleState extends State<Example> {
           0.6,
           SnapSpec.expanded,
         ],
-        onSnap: (state, snap) {
-          print('Snapped to $snap');
-        },
+        onSnap: (state, snap) => print('Snapped to $snap'),
       ),
       parallaxSpec: const ParallaxSpec(
         enabled: true,
@@ -186,13 +186,13 @@ class _ExampleState extends State<Example> {
       return border == null
           ? ElevatedButton(
               onPressed: onTap,
-              child: child,
               style: ElevatedButton.styleFrom(shape: shape),
+              child: child,
             )
           : OutlinedButton(
               onPressed: onTap,
-              child: child,
               style: OutlinedButton.styleFrom(shape: shape),
+              child: child,
             );
     }
 
@@ -396,7 +396,7 @@ class _ExampleState extends State<Example> {
               Row(
                 children: [
                   Text(
-                    '${step.time}',
+                    step.time,
                     style: textStyle.copyWith(
                       color: Colors.grey,
                       fontSize: 15,
@@ -432,8 +432,9 @@ class _ExampleState extends State<Example> {
           Traffic(0.6, '16:30'),
         ],
         colorFn: (traffic, __) {
-          if (traffic.time == '14:30')
+          if (traffic.time == '14:30') {
             return charts.Color.fromHex(code: '#F0BA64');
+          }
           return charts.MaterialPalette.gray.shade300;
         },
         domainFn: (Traffic traffic, _) => traffic.time,
